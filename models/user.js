@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     lastName: String,
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    unit: String,
     wind: Number,
     windGust: Number,
     tempLow: Number,
@@ -13,7 +14,8 @@ const userSchema = new mongoose.Schema({
     precipitation: Number,
     visibility: Number,
     cloudBaseHeight: Number,
-    densityAltitude: Number,
+    densityAltitudeLow: Number,
+    densityAltitudeHigh: Number,
     lighteningStrike: Number
 }, { timestamps: true });
 
