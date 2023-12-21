@@ -5,16 +5,16 @@ const userSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     email: { type: String, required: true, unique: true },
-    jobTitle: String,
-    birthdate: Date,
     password: { type: String, required: true },
-    address: {
-        streetAddress: String,
-        city: String,
-        state: String,
-        zipCode: Number
-    },
-    number: String
+    wind: Number,
+    windGust: Number,
+    tempLow: Number,
+    tempHigh: Number,
+    precipitation: Number,
+    visibility: Number,
+    cloudBaseHeight: Number,
+    densityAltitude: Number,
+    lighteningStrike: Number
 }, { timestamps: true });
 
 // create model
