@@ -98,7 +98,18 @@ router.post('/signup', (req, res) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    unit: 'knots',
+                    wind: 14,
+                    windGust: 25,
+                    tempLow: 32,
+                    tempHigh: 91,
+                    precipitation: 0,
+                    visibility: 3,
+                    cloudBaseHeight: 1000,
+                    densityAltitudeLow: -2000,
+                    densityAltitudeHigh: 4600,
+                    lighteningStrike: 30
                 });
 
                 // Salt and hash the password - before saving the user
@@ -260,6 +271,10 @@ router.put('/:id', (req, res) => {
     // check lighteningStrike
     if (req.body.lighteningStrike) {
         updateQuery.lighteningStrike = req.body.lighteningStrike;
+    }
+    // check unit
+    if (req.body.unit) {
+        updateQuery.unit = req.body.unit;
     }
 
     User.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })
