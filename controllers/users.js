@@ -100,6 +100,11 @@ router.post('/signup', (req, res) => {
                     email: req.body.email,
                     password: req.body.password,
                     unit: 'knots',
+                    userWindUnit: 'knots',
+                    userWindUnitChange: false,
+                    userWindGustUnit: 'knots',
+                    userWindGustUnitChange: false,
+                    userTempUnit: 'fahrenheit',
                     wind: 14,
                     windGust: 25,
                     tempLow: 32,
@@ -275,6 +280,22 @@ router.put('/:id', (req, res) => {
     // check unit
     if (req.body.unit) {
         updateQuery.unit = req.body.unit;
+    }
+    // check userWindUnit
+    if (req.body.userWindUnit) {
+        updateQuery.userWindUnit = req.body.userWindUnit;
+    }
+    // check userWindGustUnit
+    if (req.body.userWindGustUnit) {
+        updateQuery.userWindGustUnit = req.body.userWindGustUnit;
+    }
+    // check userWindUnitChange
+    if ('userWindUnitChange' in req.body) {
+        updateQuery.userWindUnitChange = req.body.userWindUnitChange;
+    }
+    // check userWindGustUnitChange
+    if ('userWindGustUnitChange' in req.body) {
+        updateQuery.userWindGustUnitChange = req.body.userWindGustUnitChange;
     }
 
     User.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })
