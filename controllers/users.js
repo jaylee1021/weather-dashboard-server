@@ -14,7 +14,6 @@ const { User } = require('../models');
 router.get('/', (req, res) => {
     User.find({})
         .then((users) => {
-            console.log('users', users);
             res.header("Access-Control-Allow-Origin", "*");
             res.json({ users: users });
         })
@@ -83,8 +82,6 @@ router.get('/:field/:value', (req, res) => {
 
 router.post('/signup', (req, res) => {
     // POST - adding the new user to the database
-    console.log('===> Inside of /signup');
-    console.log('===> /register -> req.body', req.body);
 
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -101,10 +98,7 @@ router.post('/signup', (req, res) => {
                     password: req.body.password,
                     unit: 'knots',
                     userWindUnit: 'knots',
-                    userWindUnitChange: false,
                     userWindGustUnit: 'knots',
-                    userWindGustUnitChange: false,
-                    userTempUnit: 'fahrenheit',
                     wind: 14,
                     windGust: 25,
                     tempLow: 32,
@@ -288,14 +282,6 @@ router.put('/:id', (req, res) => {
     // check userWindGustUnit
     if (req.body.userWindGustUnit) {
         updateQuery.userWindGustUnit = req.body.userWindGustUnit;
-    }
-    // check userWindUnitChange
-    if ('userWindUnitChange' in req.body) {
-        updateQuery.userWindUnitChange = req.body.userWindUnitChange;
-    }
-    // check userWindGustUnitChange
-    if ('userWindGustUnitChange' in req.body) {
-        updateQuery.userWindGustUnitChange = req.body.userWindGustUnitChange;
     }
 
     User.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })
