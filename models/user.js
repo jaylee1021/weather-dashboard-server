@@ -10,15 +10,24 @@ const userSchema = new mongoose.Schema({
     userWindUnit: String,
     userWindGustUnit: String,
     wind: Number,
+    showWind: Boolean,
     windGust: Number,
+    showWindGust: Boolean,
     tempLow: Number,
     tempHigh: Number,
+    showTemp: Boolean,
     precipitation: Number,
+    showPrecipitation: Boolean,
     visibility: Number,
+    showVisibility: Boolean,
     cloudBaseHeight: Number,
+    showCloudBaseHeight: Boolean,
     densityAltitudeLow: Number,
     densityAltitudeHigh: Number,
-    lighteningStrike: Number
+    showDensityAltitude: Boolean,
+    lighteningStrike: Number,
+    showLighteningStrike: Boolean,
+    showWindDirection: Boolean,
 }, { timestamps: true });
 
 // create model

@@ -100,15 +100,23 @@ router.post('/signup', (req, res) => {
                     userWindUnit: 'knots',
                     userWindGustUnit: 'knots',
                     wind: 14,
+                    showWind: true,
                     windGust: 25,
+                    showWindGust: true,
                     tempLow: 32,
                     tempHigh: 91,
+                    showTemp: true,
                     precipitation: 0,
+                    showPrecipitation: true,
                     visibility: 3,
+                    showVisibility: true,
                     cloudBaseHeight: 1000,
+                    showCloudBaseHeight: true,
                     densityAltitudeLow: -2000,
                     densityAltitudeHigh: 4600,
-                    lighteningStrike: 30
+                    showDensityAltitude: true,
+                    lighteningStrike: 30,
+                    showLighteningStrike: true
                 });
 
                 // Salt and hash the password - before saving the user
@@ -239,9 +247,17 @@ router.put('/:id', (req, res) => {
     if (req.body.wind) {
         updateQuery.wind = req.body.wind;
     }
+    // check show wind
+    if ('showWind' in req.body) {
+        updateQuery.showWind = req.body.showWind;
+    }
     // check windGust
     if (req.body.windGust) {
         updateQuery.windGust = req.body.windGust;
+    }
+    // check show windGust
+    if ('showWindGust' in req.body) {
+        updateQuery.showWindGust = req.body.showWindGust;
     }
     // check tempLow
     if (req.body.tempLow) {
@@ -251,25 +267,49 @@ router.put('/:id', (req, res) => {
     if (req.body.tempHigh) {
         updateQuery.tempHigh = req.body.tempHigh;
     }
+    // check show temp
+    if ('showTemp' in req.body) {
+        updateQuery.showTemp = req.body.showTemp;
+    }
     // check precipitation
     if (req.body.precipitation) {
         updateQuery.precipitation = req.body.precipitation;
+    }
+    //check show precipitation
+    if ('showPrecipitation' in req.body) {
+        updateQuery.showPrecipitation = req.body.showPrecipitation;
     }
     // check visibility
     if (req.body.visibility) {
         updateQuery.visibility = req.body.visibility;
     }
+    // check show visibility
+    if ('showVisibility' in req.body) {
+        updateQuery.showVisibility = req.body.showVisibility;
+    }
     // check cloudBaseHeight
     if (req.body.cloudBaseHeight) {
         updateQuery.cloudBaseHeight = req.body.cloudBaseHeight;
+    }
+    // check show cloudBaseHeight
+    if ('showCloudBaseHeight' in req.body) {
+        updateQuery.showCloudBaseHeight = req.body.showCloudBaseHeight;
     }
     // check densityAltitude
     if (req.body.densityAltitude) {
         updateQuery.densityAltitude = req.body.densityAltitude;
     }
+    // check show densityAltitude
+    if ('showDensityAltitude' in req.body) {
+        updateQuery.showDensityAltitude = req.body.showDensityAltitude;
+    }
     // check lighteningStrike
     if (req.body.lighteningStrike) {
         updateQuery.lighteningStrike = req.body.lighteningStrike;
+    }
+    // check show lighteningStrike
+    if ('showLighteningStrike' in req.body) {
+        updateQuery.showLighteningStrike = req.body.showLighteningStrike;
     }
     // check unit
     if (req.body.unit) {
@@ -282,6 +322,10 @@ router.put('/:id', (req, res) => {
     // check userWindGustUnit
     if (req.body.userWindGustUnit) {
         updateQuery.userWindGustUnit = req.body.userWindGustUnit;
+    }
+    // check showWindDirection
+    if ('showWindDirection' in req.body) {
+        updateQuery.showWindDirection = req.body.showWindDirection;
     }
 
     User.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })
