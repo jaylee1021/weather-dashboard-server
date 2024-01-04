@@ -11,7 +11,7 @@ const { JWT_SECRET } = process.env;
 const { User } = require('../models');
 
 // GET make a users route to get all users
-router.get('/', (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.find({})
         .then((users) => {
             res.header("Access-Control-Allow-Origin", "*");
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 // GET make a user route to get a user by id
-router.get('/:id', (req, res) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.findById(req.params.id)
         .then((user) => {
             console.log('user', user);
@@ -50,7 +50,7 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 // other routes below
 // GET make a route that queries users by [email domain] [zipCode] [state]
-router.get('/:field/:value', (req, res) => {
+router.get('/:field/:value', passport.authenticate('jwt', { session: false }), (req, res) => {
     if (req.params.field === 'zipcode' || req.params.field === 'zipCode') {
         let zipCode = parseInt(req.params.value);
         // find all users based on zipCode
@@ -230,7 +230,7 @@ router.post('/new', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const updateQuery = {};
     // check firstName
     if (req.body.firstName) {
@@ -341,7 +341,7 @@ router.put('/:id', (req, res) => {
 
 
 // DELETE route for /users/:id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 
     User.findByIdAndDelete(req.params.id)
         .then((result) => {
