@@ -116,7 +116,8 @@ router.post('/signup', (req, res) => {
                     densityAltitudeHigh: 4600,
                     showDensityAltitude: true,
                     lighteningStrike: 30,
-                    showLighteningStrike: true
+                    showLighteningStrike: true,
+                    showWindDirection: true,
                 });
 
                 // Salt and hash the password - before saving the user
