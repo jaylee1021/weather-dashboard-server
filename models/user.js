@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema({
     showLighteningStrike: Boolean,
     showWindDirection: Boolean,
     windDirectionLow: Number,
-    windDirectionHigh: Number,
-    noWindDirection: String
+    windDirectionHigh: Number
 }, { timestamps: true });
 
 // create model

@@ -118,7 +118,8 @@ router.post('/signup', (req, res) => {
                     lighteningStrike: 30,
                     showLighteningStrike: true,
                     showWindDirection: true,
-                    noWindDirection: 'N/A'
+                    windDirectionLow: 0,
+                    windDirectionHigh: 360
                 });
 
                 // Salt and hash the password - before saving the user
