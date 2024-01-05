@@ -118,6 +118,7 @@ router.post('/signup', (req, res) => {
                     lighteningStrike: 30,
                     showLighteningStrike: true,
                     showWindDirection: true,
+                    noWindDirection: 'N/A'
                 });
 
                 // Salt and hash the password - before saving the user
@@ -327,6 +328,16 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
     // check showWindDirection
     if ('showWindDirection' in req.body) {
         updateQuery.showWindDirection = req.body.showWindDirection;
+    }
+
+    // check windDirectionLow
+    if (req.body.windDirectionLow) {
+        updateQuery.windDirectionLow = req.body.windDirectionLow;
+    }
+
+    // check windDirectionHigh
+    if (req.body.windDirectionHigh) {
+        updateQuery.windDirectionHigh = req.body.windDirectionHigh;
     }
 
     User.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })
