@@ -88,6 +88,7 @@ router.post('/newSite', (req, res) => {
                     siteName: req.body.siteName,
                     siteLatitude: req.body.siteLatitude,
                     siteLongitude: req.body.siteLongitude,
+                    userId: req.body.userId
                 })
                     .then((newSite) => {
                         console.log('new site created ->', newSite);
@@ -123,6 +124,10 @@ router.put('/:id', (req, res) => {
     // check siteLongitude
     if (req.body.siteLongitude) {
         updateQuery.siteLongitude = req.body.siteLongitude;
+    }
+    // check userId
+    if (req.body.userId) {
+        updateQuery.userId = req.body.userId;
     }
 
     Site.findByIdAndUpdate(req.params.id, { $set: updateQuery }, { new: true })

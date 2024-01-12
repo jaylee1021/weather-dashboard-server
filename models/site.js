@@ -5,6 +5,7 @@ const siteSchema = new mongoose.Schema({
     siteName: { type: String, required: true },
     siteLatitude: { type: Number, required: true },
     siteLongitude: { type: Number, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, { timestamps: true });
 
 // create model
