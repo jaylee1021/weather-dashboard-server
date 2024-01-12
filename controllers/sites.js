@@ -39,6 +39,21 @@ router.get('/:id', (req, res) => {
         });
 });
 
+// Get route for /sites/user/:id
+router.get('/user/:id', (req, res) => {
+    Site.find({ userId: req.params.id })
+        .then((sites) => {
+            console.log('sites', sites);
+            res.header("Access-Control-Allow-Origin", "*");
+            res.json({ sites: sites });
+        })
+        .catch((error) => {
+            console.log('error', error);
+            res.header("Access-Control-Allow-Origin", "*");
+            res.json({ message: 'There was an issue, please try again...' });
+        });
+});
+
 // other routes below
 // GET make a route that queries sites by [email domain] [zipCode] [state]
 router.get('/:field/:value', (req, res) => {
