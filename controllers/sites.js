@@ -10,12 +10,12 @@ const { JWT_SECRET } = process.env;
 // import the Site model
 const { Site } = require('../models');
 
-// GET make a users route to get all users
+// GET make a sites route to get all sites
 router.get('/', (req, res) => {
     Site.find({})
-        .then((users) => {
+        .then((sites) => {
             res.header("Access-Control-Allow-Origin", "*");
-            res.json({ users: users });
+            res.json({ sites: sites });
         })
         .catch((error) => {
             console.log('error', error);
@@ -40,16 +40,16 @@ router.get('/:id', (req, res) => {
 });
 
 // other routes below
-// GET make a route that queries users by [email domain] [zipCode] [state]
+// GET make a route that queries sites by [email domain] [zipCode] [state]
 router.get('/:field/:value', (req, res) => {
     if (req.params.field === 'zipcode' || req.params.field === 'zipCode') {
         let zipCode = parseInt(req.params.value);
-        // find all users based on zipCode
+        // find all sites based on zipCode
         Site.find({ "address.zipCode": zipCode })
-            .then((users) => {
-                console.log('users', users);
+            .then((sites) => {
+                console.log('sites', sites);
                 res.header("Access-Control-Allow-Origin", "*");
-                return res.json({ users: users });
+                return res.json({ sites: sites });
             })
             .catch((error) => {
                 console.log('error', error);
@@ -141,7 +141,7 @@ router.put('/:id', (req, res) => {
 });
 
 
-// DELETE route for /users/:id
+// DELETE route for /sites/:id
 router.delete('/:id', (req, res) => {
 
     Site.findByIdAndDelete(req.params.id)
@@ -149,7 +149,7 @@ router.delete('/:id', (req, res) => {
             return res.json({ message: `site at ${req.params.id} was deleted` });
         })
         .catch((error) => {
-            console.log('error inside DELETE /users/:id', error);
+            console.log('error inside DELETE /sites/:id', error);
             return res.json({ message: 'error occured, please try again.' });
         });
 });
