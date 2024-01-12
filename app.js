@@ -12,7 +12,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get('/', (req, res) => {
-    return res.json({ message: 'Welcome to my API' });
+    return res.json({ message: 'Welcome to Weather Dashboard API. For questions or concerns, please contact leejayjong@gmail.com.' });
 });
 
 app.use('/users', require('./controllers/users'));
