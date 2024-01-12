@@ -175,7 +175,7 @@ router.post('/login', async (req, res) => {
                 lastName: foundUser.lastName,
             };
 
-            jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
+            jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 * 6 }, (err, token) => {
                 if (err) {
                     res.status(400).json({ message: 'Session has endedd, please log in again' });
                 }
