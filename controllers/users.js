@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const { JWT_SECRET } = process.env;
+const axios = require('axios');
 
 // import the User model
 const { User } = require('../models');
@@ -48,7 +49,46 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
     res.json({ id, firstName, lastName, email, address, jobTitle, birthdate, number });
 });
 
-// other routes below
+// Axios call to weather api and air quality api to get weather data
+router.get('/weather/:city', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const city = req.params.city;
+    if (city === 'hsiland') {
+        latitude = process.env.NEXT_PUBLIC_HSILAND_LATITUDE;
+        longitude = process.env.NEXT_PUBLIC_HSILAND_LONGITUDE;
+    } else if (city === 'pdt10_hangar') {
+        latitude = process.env.NEXT_PUBLIC_PDT10_HANGAR_LATITUDE;
+        longitude = process.env.NEXT_PUBLIC_PDT10_HANGAR_LONGITUDE;
+    } else if (city === 'pdt10_northpad') {
+        latitude = process.env.NEXT_PUBLIC_PDT10_NORTH_PAD_LATITUDE;
+        longitude = process.env.NEXT_PUBLIC_PDT10_NORTH_PAD_LONGITUDE;
+    }
+    try {
+        const [weatherResponse, aqiResponse] = await Promise.all([
+            axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${latitude},${longitude}`),
+            axios.get(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi&hourly=us_aqi&timezone=America%2FLos_Angeles&forecast_days=1`)
+        ]);
+        const weatherData = weatherResponse.data;
+        const forecast = weatherData.forecast.forecastday[0].hour;
+        const weather = weatherData.current;
+        const aqiData = aqiResponse.data;
+        const windKnots = weather.wind_mph * 0.868976;
+        const windGustKnots = weather.gust_mph * 0.868976;
+        const windMS = weather.wind_mph * 0.44704;
+        const windGustMS = weather.gust_mph * 0.44704;
+        return res.json({
+            forecast,
+            weather,
+            windKnots,
+            windGustKnots,
+            windMS,
+            windGustMS,
+            aqiData
+        });
+    } catch (error) {
+        console.log(error);
+    };
+});
+
 // GET make a route that queries users by [email domain] [zipCode] [state]
 router.get('/:field/:value', passport.authenticate('jwt', { session: false }), (req, res) => {
     if (req.params.field === 'zipcode' || req.params.field === 'zipCode') {
